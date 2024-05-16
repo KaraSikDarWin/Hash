@@ -289,8 +289,8 @@ public:
         int flag= false;
         bool unique=true;
         bool done = false;
-        int ind;
-        int attempt=0;
+//        int ind;
+//        int attempt=0;
         int hash=MultHash(p->fio.Surname,p->fio.Name,p->fio.SeconName,p->NumberOfOrder);
 
 //        while (flag == 0 and attempt < size) {
