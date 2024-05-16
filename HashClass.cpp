@@ -254,15 +254,13 @@ public:
                 return -ind;
             }
             if (Table[ind].status == 0) {
-//                Table[ind].LinkNode = p;
-//                Table[ind].status = true;
                 flag= true;
                 return ind;
             }
             //дописать проверку уникальности ключа
             attempt++;
         }
-        return -1;
+        return 0;
     }
 
     int addHashNode(Elem *p, bool Ftor = true){ //УЫЕЛИЧИТЬ ПОСЛЕ ДОБАВЛЕНИ\ УМЕНЬШИТЬ ПОСЛЕ УДАЛЕНИЯ\ ДОПИСАТЬ ОТДЕЛЬНЫЙ МЕТОД ДОБАВЛЕНИЯ НОДА ДЛЯ ПОЛЬЗОВАТЕЛЯ
@@ -289,7 +287,7 @@ public:
                 return -1;
             }
 
-            if (flag == -1 and !unique) {
+            if (flag == 0 and !done) {
                 SizeUp();
                 addHashNode(p);
             }
@@ -300,7 +298,7 @@ public:
                 Table[flag].status = true;
                 Fully = float(NonEmptyNodes) / float(size);
                 if (IsFull() == 1) {
-                    SizeUp();
+                   // SizeUp();
                 }
                 return 1;
             }
@@ -327,6 +325,7 @@ public:
                 flag = true;
             }
         }
+        return 1;
     }
 
     int DelHashNode(string FIO, int OrderNumber){
@@ -404,13 +403,13 @@ public:
 
 int main(){
     vector<Elem> arr;
-    int N=10;
+    int N=11;
     Read(arr,N);
 
     HashTable table(10);
     table.Create(N,arr);
 
-    table.Search("D D D",2245);
+
 
 
     table.Print();
