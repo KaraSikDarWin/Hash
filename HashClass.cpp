@@ -251,12 +251,14 @@ public:
 //            attempt++;
 //        }
 //        cout<<"This element doesn't exist in this table"<<endl;
+
         ind = IfCollision(hash,mas[0],mas[1],mas[2],NumberOfOrder,flag,unique);
         if(ind >=0 and unique){
             cout<<"This element doesn't exist in this table"<<endl;
                 return 0;
         } else if(!unique){
-
+            cout<<"It element exist in table. It's index is "<<to_string(ind)<<endl;
+            return 1;
         }
         return 0;
     }
@@ -474,15 +476,13 @@ public:
 
 int main(){
     vector<Elem> arr;
-    int N=5;
+    int N=10;
     Read(arr,N);
 
     HashTable table(10);
     table.Create(N,arr);
 
-    table.DelHashNode("B B B", 225);
-    table.DelHashNode("A A A", 225);
-    table.DelHashNode("D D D", 225);
+    table.Search("D D D",2245);
 
 
     table.Print();
