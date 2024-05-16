@@ -145,9 +145,6 @@ private:
         }
         g.close();
     }
-    bool EqualFIO(Elem* x, string *mas){
-        return (x->fio.Name == mas[1] and x->fio.Surname == mas[0] and x->fio.SeconName == mas[2]);
-    }
 
     void split(string* ms ,string str){
         int space =0;
@@ -208,9 +205,6 @@ private:
         }
     }
 
-    bool equal(Elem* x, Elem* y){
-        return ((x->fio.Surname==y->fio.Surname) and (x->fio.Name==y->fio.Name) and (x->fio.SeconName==y->fio.SeconName) and (x->NumberOfOrder==y->NumberOfOrder));
-    }
 
 public:
 
@@ -234,23 +228,9 @@ public:
         p->fio.SeconName=mas[2];
         p->NumberOfOrder=NumberOfOrder;
         int hash = MultHash(mas[0],mas[1],mas[2],NumberOfOrder);
-        int attempt=0;
         int ind;
         bool flag= false;
         bool unique=true;
-//        while (attempt<size){
-//            ind = AntiCollision(hash,attempt);
-//            if (Table[ind].LinkNode!= nullptr and equal(Table[ind].LinkNode,p)){
-//                cout<<"It element exist in table. It's index is "<<to_string(ind)<<endl;
-//                return 1;
-//            }
-//            if (Table[ind].status == 0){
-//                cout<<"This element doesn't exist in this table"<<endl;
-//                return 0;
-//            }
-//            attempt++;
-//        }
-//        cout<<"This element doesn't exist in this table"<<endl;
 
         ind = IfCollision(hash,mas[0],mas[1],mas[2],NumberOfOrder,flag,unique);
         if(ind >=0 and unique){
@@ -286,29 +266,12 @@ public:
     }
 
     int addHashNode(Elem *p, bool Ftor = true){ //УЫЕЛИЧИТЬ ПОСЛЕ ДОБАВЛЕНИ\ УМЕНЬШИТЬ ПОСЛЕ УДАЛЕНИЯ\ ДОПИСАТЬ ОТДЕЛЬНЫЙ МЕТОД ДОБАВЛЕНИЯ НОДА ДЛЯ ПОЛЬЗОВАТЕЛЯ
-        int flag= false;
+        int flag;
         bool unique=true;
         bool done = false;
-//        int ind;
-//        int attempt=0;
+
         int hash=MultHash(p->fio.Surname,p->fio.Name,p->fio.SeconName,p->NumberOfOrder);
 
-//        while (flag == 0 and attempt < size) {
-//            ind = AntiCollision(hash,attempt);
-//            if (Table[ind].LinkNode!= nullptr and equal(Table[ind].LinkNode, p)) {
-//                unique = false;
-//                flag= true;
-//                done=true;
-//            }
-//            if (Table[ind].status == 0) {
-//                Table[ind].LinkNode = p;
-//                Table[ind].status = true;
-//                flag = true;
-//                done=true;
-//            }
-//            //дописать проверку уникальности ключа
-//            attempt++;
-//        }
         if (Table[hash].status==0){
             if (Ftor) NonEmptyNodes++;
             Table[hash].LinkNode = p;
@@ -372,21 +335,6 @@ public:
         bool flag = false;
         split(mas,FIO);
 
-
-//        while(flag == 0 and attempt<size){
-//            ind = AntiCollision(hash,attempt);
-//            if (Table[ind].status==0) {
-//                cout<<"This isn't exist in this table"<<endl;
-//                return -1;
-//            }
-//            else if (Table[ind].LinkNode->NumberOfOrder == OrderNumber and EqualFIO(Table[ind].LinkNode,mas)){
-//                flag= true;
-//                Table[ind].status= false;
-//                buffer = ind;
-//                NonEmptyNodes--;
-//                done=true;
-//            }else attempt++;
-//        }
         int hash = MultHash(mas[0],mas[1],mas[2],OrderNumber);
         int ind = IfCollision(hash,mas[0],mas[1],mas[2],OrderNumber,flag,unique);
         if (ind>=0 and unique){
@@ -397,26 +345,6 @@ public:
             Table[ind].status= false;
             NonEmptyNodes--;
         }
-
-//        flag = false;
-//        int secind;
-//        while (flag == 0) {
-//            ind = (ind + 1) % size;
-//            if (Table[ind].status != 0) {
-//                hash = MultHash(Table[ind].LinkNode->fio.Surname,Table[ind].LinkNode->fio.Name,Table[ind].LinkNode->fio.SeconName,Table[ind].LinkNode->NumberOfOrder);
-//                if (hash != ind) {
-//                    secind = hash;
-//                    while (Table[secind].status != 0) {
-//                        secind = (secind + 1) % size;
-//                    }
-//                    Table[secind] = Table[ind];
-//                    Table[ind].status = false;
-//                }
-//            } else {
-//                flag = true;
-//            }
-//            }
-
             Podtyag(ind);
             Fully = (float(NonEmptyNodes) / size);
             if (IsFull() == -1) SizeDown();
