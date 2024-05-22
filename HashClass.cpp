@@ -1,7 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <cstring>
-#include <chrono>
 #include <vector>
 #include <cmath>
 #include <iomanip>
@@ -71,7 +69,6 @@ void Rasdel(Elem &p, string str){
             else i++;
         }
     }
-
     i=33;
     p.fio.SeconName=sub;
     sub="";
@@ -103,6 +100,7 @@ void Rasdel(Elem &p, string str){
 void Read(vector<Elem>&mas, int N){
     cout<<"Reading data started..."<<endl;
     ifstream fin("TestForHash.txt");
+    //ifstream fin("golThree.txt");
     string b;
 
     for (int i=0; i<N;i++){
@@ -170,9 +168,10 @@ private:
 
     int MultHash(string SurName1, string Name1, string SecondName1, int NumberOfOrder1){
         int key = ConvertStringToInt(SurName1)+ConvertStringToInt(Name1)+ConvertStringToInt(SecondName1)+NumberOfOrder1;
-        float answ = key * 0.33;
-        answ = answ - int(answ);
-        return ::floor(size * answ);
+//        float answ = key * 0.33;
+//        answ = answ - int(answ);
+//        return ::floor(size * answ);
+        return (key)%size;
     }
 
     int AntiCollision(int hash, int attempt){
@@ -205,7 +204,6 @@ private:
         }
     }
 
-
 public:
 
     int AddNode(string fio, int NumberOfOrder){
@@ -222,11 +220,6 @@ public:
     int Search(string fio, int NumberOfOrder){
         string mas[3];
         split(mas,fio);
-        Elem* p = new Elem();
-        p->fio.Surname=mas[0];
-        p->fio.Name=mas[1];
-        p->fio.SeconName=mas[2];
-        p->NumberOfOrder=NumberOfOrder;
         int hash = MultHash(mas[0],mas[1],mas[2],NumberOfOrder);
         int ind;
         bool flag= false;
@@ -298,7 +291,7 @@ public:
                 Table[flag].status = true;
                 Fully = float(NonEmptyNodes) / float(size);
                 if (IsFull() == 1) {
-                   // SizeUp();
+                    SizeUp();
                 }
                 return 1;
             }
@@ -348,7 +341,6 @@ public:
             Fully = (float(NonEmptyNodes) / size);
             if (IsFull() == -1) SizeDown();
             return 1;
-
     }
 
     void Print(){
@@ -403,13 +395,23 @@ public:
 
 int main(){
     vector<Elem> arr;
-    int N=11;
+    int N=5;
     Read(arr,N);
 
-    HashTable table(10);
-    table.Create(N,arr);
+    HashTable table(13);
+    //table.Create(N,arr);
 
+    table.AddNode("A B C", 225);
+    table.AddNode("B A C", 225);
+    table.AddNode("C A B", 225);
+    table.AddNode("C A B", 227);
+    table.AddNode("A B C", 227);
+    table.AddNode("B A C", 227);
+    table.AddNode("B A C", 226);
+    table.AddNode("A B C", 226);
+    table.AddNode("C A B", 226);
 
+    table.DelHashNode("B A C",225);
 
 
     table.Print();
